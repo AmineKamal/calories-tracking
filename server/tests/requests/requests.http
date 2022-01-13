@@ -1,0 +1,60 @@
+@baseUrl = http://localhost:5000
+@token = {{Login.response.body.$.token}}
+
+### @name CreateUser
+POST {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Sarah",
+    "password": "Test123",
+    "name": "Sarah Toupin",
+    "weight": { "kind": "lb", "value": 155 }
+}
+
+### 
+
+# @name Login
+POST {{baseUrl}}/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Sarah",
+    "password": "Test123"
+}
+
+### 
+
+# @name UpdateUser
+PUT {{baseUrl}}/user HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{token}}
+
+{
+    "name": "Sarah Toupin",
+    "weight": { "value": 155, "kind": "lb" },
+    "height": { "value": 165, "kind": "cm" },
+    "age": 25,
+    "gender": "f",
+    "goal": "loss",
+    "activity_level": "extra_active",
+    "weight_date_goal": {"weight": { "value": 145, "kind": "lb" }, "date": "2022-04-01"}
+}
+
+### 
+
+# @name EvaluateMacros
+PUT {{baseUrl}}/user/evaluate/macros HTTP/1.1
+authorization: Bearer {{token}}
+
+### 
+
+# @name UpdateUser
+PUT {{baseUrl}}/user/add/macros HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{token}}
+
+{
+    "calories": 500,
+    "protein": 25
+}
